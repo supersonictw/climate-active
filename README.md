@@ -1,4 +1,4 @@
-# climate-active
+# karafa
 
 ## Project setup
 ```
