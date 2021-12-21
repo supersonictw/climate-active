@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-app-bar-nav-icon>
+      <v-app-bar-nav-icon to="/editor">
         <v-icon>mdi-pen</v-icon>
       </v-app-bar-nav-icon>
       <v-toolbar-title>Karafa</v-toolbar-title>

@@ -1,8 +1,14 @@
 <template>
-  <div id="editor">
-    <textarea :value="input" @input="update"></textarea>
-    <div v-html="compiledMarkdown"></div>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-textarea :value="input" @input="update"></v-textarea>
+      </v-col>
+      <v-col>
+        <v-card v-html="compiledMarkdown"></v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
     
 <script>
@@ -21,6 +27,7 @@ export default {
   },
   methods: {
     update: _.debounce(function (e) {
+      localStorage.setItem("writing", this.input);
       this.input = e.target.value;
     }, 300),
   },
