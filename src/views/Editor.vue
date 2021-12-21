@@ -1,35 +1,45 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>
-        <v-textarea :value="input" @input="update"></v-textarea>
-      </v-col>
-      <v-col>
-        <v-card v-html="compiledMarkdown"></v-card>
-      </v-col>
-    </v-row>
+    <v-card class="mt-5">
+      <v-row>
+        <v-col>
+          <v-card-text>
+            <v-textarea filled auto-grow v-model="input" />
+          </v-card-text>
+        </v-col>
+        <v-col>
+          <v-card-text>
+            <v-card flat v-html="render" />
+          </v-card-text>
+        </v-col>
+      </v-row>
+    </v-card>
   </v-container>
 </template>
     
 <script>
-import _ from "lodash";
 import { marked } from "marked";
 
 export default {
   name: "Editor",
   data: () => ({
-    input: "# hello",
+    input: "# KaraKaraFa\n\n> Hello, my master. :D",
   }),
   computed: {
-    compiledMarkdown: function () {
+    render() {
       return marked(this.input, { sanitize: true });
     },
   },
-  methods: {
-    update: _.debounce(function (e) {
-      localStorage.setItem("writing", this.input);
-      this.input = e.target.value;
-    }, 300),
+  watch: {
+    input(e) {
+      localStorage.setItem("last_update", e);
+    },
+  },
+  created() {
+    const last_update = localStorage.getItem("last_update");
+    if (last_update) {
+      this.input = last_update;
+    }
   },
 };
 </script>
