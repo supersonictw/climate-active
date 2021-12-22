@@ -1,5 +1,10 @@
 module.exports = {
-  transpileDependencies: [
-    'vuetify'
-  ]
-}
+  pages: {
+      index: {
+          title: 'Karafa',
+          entry: 'src/main.js',
+          template: 'public/index.html',
+          filename: 'index.html',
+      }
+  },
+};
