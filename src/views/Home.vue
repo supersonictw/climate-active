@@ -12,8 +12,10 @@
       <div v-else>
         <v-list-item v-for="(i, j) in notes" :key="j" two-line>
           <v-list-item-content>
-            <v-list-item-title>{{ i }}</v-list-item-title>
-            <v-list-item-subtitle>Your simple notebook.</v-list-item-subtitle>
+            <v-list-item-title>{{ i.title }}</v-list-item-title>
+            <v-list-item-subtitle>
+              {{ summary(i) }}
+            </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </div>
@@ -27,10 +29,20 @@ export default {
   data: () => ({
     notes: [],
   }),
+  methods: {
+    summary(note) {
+      return `${new Date(note.updated_at).toLocaleString()}`;
+    },
+  },
   mounted() {
     const cache = [];
-    this.$db.table("notes").each((i) => cache.push(i));
-    this.notes.push(...cache);
+    this.$db
+      .table("notes")
+      .each((i) => cache.push(i))
+      .then(() => {
+        cache.sort((a, b) => a.updated_at < b.updated_at);
+        this.notes.push(...cache), 300;
+      });
   },
 };
 </script>
