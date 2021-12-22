@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-app-bar-nav-icon @click="action">
+      <v-app-bar-nav-icon class="amber darken-3" @click="action">
         <v-icon>{{ icon }}</v-icon>
       </v-app-bar-nav-icon>
-      <v-toolbar-title>Karafa</v-toolbar-title>
+      <v-toolbar-title>🐣 Karafa</v-toolbar-title>
     </v-app-bar>
     <v-main>
       <router-view />
@@ -22,11 +22,7 @@ export default {
   methods: {
     action() {
       if (this.$route.path === "/editor") {
-        if (window.history.length) {
-          this.$router.back();
-        } else {
-          this.$router.replace("/");
-        }
+        this.$router.replace("/");
       } else {
         this.$router.replace("/editor");
       }

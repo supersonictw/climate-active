@@ -9,12 +9,12 @@
         </v-col>
         <v-col class="d-none d-lg-block">
           <v-card-text>
-            <v-card flat v-html="render" />
+            <v-card id="preview" flat v-html="render" />
           </v-card-text>
         </v-col>
       </v-row>
       <v-card-actions>
-        <v-btn class="secondary" @click="cancel">Cancel</v-btn>
+        <v-btn class="red" @click="cancel">Clear</v-btn>
         <v-spacer />
         <v-btn class="primary" @click="save">Save</v-btn>
       </v-card-actions>
@@ -23,12 +23,13 @@
 </template>
     
 <script>
+import { v4 as uuid } from "uuid";
 import { marked } from "marked";
 
 export default {
   name: "Editor",
   data: () => ({
-    input: "# KaraKaraFa\n\n> Hello, my master. :D",
+    input: "# KaraKaraFa\nHello, my master. :D\n",
   }),
   computed: {
     render() {
@@ -42,14 +43,19 @@ export default {
   },
   methods: {
     cancel() {
+      this.input = "";
       localStorage.removeItem("last_update");
-      if (window.history.length) {
-        this.$router.back();
-      } else {
-        this.$router.replace("/");
-      }
     },
     save() {
+      const title = document.querySelector("#preview h1").textContent;
+      this.$db.table("notes").add({
+        uuid: uuid(),
+        title: title || "Untitled",
+        content: this.input,
+        encrypted: false,
+        created_at: new Date().getTime(),
+        updated_at: new Date().getTime(),
+      });
       this.$router.replace("/");
     },
   },
