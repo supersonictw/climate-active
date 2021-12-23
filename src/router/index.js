@@ -11,13 +11,18 @@ const routes = [
     component: Home
   },
   {
-    path: '/editor',
-    name: 'Editor',
+    path: '/new',
+    name: 'New',
     component: () => import('../views/Editor.vue')
   },
   {
-    path: '/viewer/:uuid',
-    name: 'Viewer',
+    path: '/edit/:uuid',
+    name: 'Edit',
+    component: () => import('../views/Editor.vue')
+  },
+  {
+    path: '/view/:uuid',
+    name: 'View',
     component: () => import('../views/Viewer.vue')
   },
   {
