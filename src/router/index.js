@@ -16,6 +16,11 @@ const routes = [
     component: () => import('../views/Editor.vue')
   },
   {
+    path: '/viewer/:uuid',
+    name: 'Viewer',
+    component: () => import('../views/Viewer.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue')

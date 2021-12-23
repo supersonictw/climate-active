@@ -10,7 +10,7 @@
         </v-list-item>
       </div>
       <div v-else>
-        <v-list-item v-for="(i, j) in notes" :key="j" two-line>
+        <v-list-item v-for="(i, j) in notes" :key="j" :to="`/viewer/${i.uuid}`" two-line>
           <v-list-item-content>
             <v-list-item-title>{{ i.title }}</v-list-item-title>
             <v-list-item-subtitle>
