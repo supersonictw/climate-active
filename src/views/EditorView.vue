@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-card-actions class="mb-3">
+      <v-btn v-if="uuid" class="secondary" to="/">Back</v-btn>
+    </v-card-actions>
     <v-card class="mt-5">
       <v-row>
         <v-col>
@@ -54,7 +57,7 @@ export default {
       localStorage.removeItem("last_update");
     },
     save() {
-      const title = document.querySelector("#preview h1").textContent;
+      const title = document.querySelector("#preview h1")?.textContent;
       const data = {
         uuid: this.uuid || uuid(),
         title: title || "Untitled",
