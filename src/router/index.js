@@ -6,29 +6,29 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'HomeView',
     component: () => import('@/views/HomeView.vue')
   },
   {
     path: '/viewer/:uuid',
-    name: 'Viewer',
+    name: 'ViewerView',
     component: () => import('@/views/ViewerView.vue'),
     props: true
   },
   {
     path: '/editor',
-    name: 'Editor',
+    name: 'EditorViewCreate',
     component: () => import('@/views/EditorView.vue')
   },
   {
     path: '/editor/:uuid',
-    name: 'Editor',
+    name: 'EditorViewUpdate',
     component: () => import('@/views/EditorView.vue'),
     props: true
   },
   {
     path: '/about',
-    name: 'About',
+    name: 'AboutView',
     component: () => import('@/views/AboutView.vue')
   }
 ]

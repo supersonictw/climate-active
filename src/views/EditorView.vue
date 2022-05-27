@@ -30,7 +30,7 @@ import { v4 as uuid } from "uuid";
 import { marked } from "marked";
 
 export default {
-  name: "Editor",
+  name: "EditorView",
   props: {
     uuid: {
       type: String,
