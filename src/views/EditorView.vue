@@ -4,7 +4,7 @@
       <v-row>
         <v-col>
           <v-card-text>
-            <v-textarea filled auto-grow v-model="input" />
+            <v-textarea filled auto-grow v-model="content" />
           </v-card-text>
         </v-col>
         <v-col class="d-none d-lg-block">
@@ -28,41 +28,59 @@ import { marked } from "marked";
 
 export default {
   name: "Editor",
+  props: {
+    uuid: {
+      type: String,
+      required: false,
+      default: () => ""
+    }
+  },
   data: () => ({
-    input: "# KaraKaraFa\nHello, my master. :D\n",
+    content: "# KaraKaraFa\nHello, my master. :D\n",
   }),
   computed: {
     render() {
-      return marked(this.input, { sanitize: true });
+      return marked(this.content, { sanitize: true });
     },
   },
   watch: {
-    input(e) {
+    content(e) {
       localStorage.setItem("last_update", e);
     },
   },
   methods: {
     cancel() {
-      this.input = "";
+      this.content = "";
       localStorage.removeItem("last_update");
     },
     save() {
       const title = document.querySelector("#preview h1").textContent;
-      this.$db.table("notes").add({
-        uuid: uuid(),
+      const data = {
+        uuid: this.uuid || uuid(),
         title: title || "Untitled",
-        content: this.input,
+        content: this.content,
         encrypted: false,
         created_at: new Date().getTime(),
         updated_at: new Date().getTime(),
-      });
+      };
+      if (this.uuid) {
+        this.$db.table("notes").put(data);
+      } else {
+        this.$db.table("notes").add(data);
+      }
+      localStorage.removeItem("last_update");
       this.$router.replace("/");
     },
   },
   created() {
     const last_update = localStorage.getItem("last_update");
     if (last_update) {
-      this.input = last_update;
+      this.content = last_update;
+    } else if (this.uuid) {
+      this.$db
+          .table("notes")
+          .get(this.uuid)
+          .then((i) => (this.content = i.content));
     }
   },
 };

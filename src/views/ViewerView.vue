@@ -18,21 +18,25 @@ import { marked } from "marked";
 
 export default {
   name: "Previewer",
+  props: {
+    uuid: {
+      type: String,
+      required: true
+    }
+  },
   data: () => ({
-    uuid: null,
-    input: "",
+    content: "",
   }),
   computed: {
     render() {
-      return marked(this.input, { sanitize: true });
+      return marked(this.content, { sanitize: true });
     },
   },
   created() {
-    this.uuid = this.$route.params.uuid;
     this.$db
       .table("notes")
-      .get(this.$route.params.uuid)
-      .then((i) => (this.input = i.content));
+      .get(this.uuid)
+      .then((i) => (this.content = i.content));
   },
 };
 </script>

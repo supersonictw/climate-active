@@ -36,12 +36,13 @@ export default {
   },
   mounted() {
     const cache = [];
+    const desc = (a, b) => a.updated_at < b.updated_at;
     this.$db
       .table("notes")
       .each((i) => cache.push(i))
       .then(() => {
-        cache.sort((a, b) => a.updated_at < b.updated_at);
-        this.notes.push(...cache), 300;
+        cache.sort(desc);
+        this.notes.push(...cache);
       });
   },
 };
