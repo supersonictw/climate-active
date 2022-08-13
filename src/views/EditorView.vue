@@ -48,13 +48,13 @@ export default {
   },
   watch: {
     content(e) {
-      localStorage.setItem("last_update", e);
+      localStorage.setItem("karafa-last_update", e);
     },
   },
   methods: {
     cancel() {
       this.content = "";
-      localStorage.removeItem("last_update");
+      localStorage.removeItem("karafa-last_update");
     },
     save() {
       const title = document.querySelector("#preview h1")?.textContent;
@@ -71,12 +71,12 @@ export default {
       } else {
         this.$db.table("notes").add(data);
       }
-      localStorage.removeItem("last_update");
+      localStorage.removeItem("karafa-last_update");
       this.$router.replace("/");
     },
   },
   created() {
-    const last_update = localStorage.getItem("last_update");
+    const last_update = localStorage.getItem("karafa-last_update");
     if (last_update) {
       this.content = last_update;
     } else if (this.uuid) {
